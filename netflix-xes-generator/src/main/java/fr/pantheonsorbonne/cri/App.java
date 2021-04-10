@@ -5,11 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -30,11 +27,15 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import fr.pantheonsorbonne.ufr27.miage.model.stream4good.Content;
-import fr.pantheonsorbonne.ufr27.miage.model.stream4good.IMDBData;
-import fr.pantheonsorbonne.ufr27.miage.model.stream4good.IMDBEntry;
-import fr.pantheonsorbonne.ufr27.miage.model.stream4good.Session;
-import fr.pantheonsorbonne.ufr27.miage.model.stream4good.UserData;
+import fr.pantheonsorbonne.cri.cache.CachedResource;
+import fr.pantheonsorbonne.cri.cache.RedisCachedResource;
+import fr.pantheonsorbonne.cri.log.Inspector;
+import fr.pantheonsorbonne.cri.model.oauth2.Oauth2Response;
+import fr.pantheonsorbonne.cri.model.stream4good.Session;
+import fr.pantheonsorbonne.cri.model.stream4good.UserData;
+import fr.pantheonsorbonne.cri.primespace.ParallelTraceFactory;
+import fr.pantheonsorbonne.cri.xes.EventFactory;
+import fr.pantheonsorbonne.cri.xes.XesFactory;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.Log;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.ObjectFactory;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.TraceType;
@@ -54,48 +55,10 @@ import jakarta.ws.rs.core.Response;
 public class App {
 
 	private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(50);
-	static final CachedResource CACHE = new RedisCachedResource();
+	public static final CachedResource CACHE = new RedisCachedResource();
 	private static final ObjectFactory XES_FACTORY = new ObjectFactory();
 	private static final XesFactory eventFactory = new EventFactory(XES_FACTORY);
-	private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
-
-	private static IMDBEntry getIMDBData(String videoId, Client client) throws IOException {
-		Optional<IMDBEntry> optionalIMDBEntry = CACHE.lookup(videoId, IMDBEntry.class);
-		if (optionalIMDBEntry == null) {
-			return null;
-		} else if (optionalIMDBEntry.isEmpty()) {
-			try (JsonReader reader = new JsonReader(new InputStreamReader((InputStream) client
-					.target(new URI("https://platform-api.vod-prime.space/api/emns/provider/4/identifier/" + videoId))
-					.request().accept(MediaType.APPLICATION_JSON).get().getEntity()))) {
-				WebTarget target = ((Content) new Gson().fromJson(reader, Content.class)).getLinkTarget("imdb_id",
-						client);
-				try (JsonReader reader2 = new JsonReader(new InputStreamReader(
-						(InputStream) target.request().accept(MediaType.APPLICATION_JSON).get().getEntity()))) {
-					IMDBEntry entry = ((IMDBData) new Gson().fromJson(reader2, IMDBData.class)).getData();
-					CACHE.cache(videoId, entry);
-					return entry;
-				}
-			} catch (Throwable e) {
-				LOGGER.trace(videoId + " not found");
-				CACHE.cache(videoId, IMDBEntry.class);
-				return null;
-			}
-
-		} else {
-			return optionalIMDBEntry.get();
-		}
-	}
-
-	static XMLGregorianCalendar toDate(Instant instant) {
-		String dateTimeString = instant.toString();
-		XMLGregorianCalendar date2;
-		try {
-			date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTimeString);
-		} catch (DatatypeConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-		return date2;
-	}
+	public static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
 	public static void main(String[] args) throws JAXBException, IOException, DatatypeConfigurationException {
 		AtomicInteger counter = new AtomicInteger(0);
@@ -155,19 +118,6 @@ public class App {
 		writer.close();
 		gadget.setStopped(true);
 
-	}
-
-	static String getCountryForVideoId(Client client, String videoId) throws IOException {
-		String country = "unknown";
-		IMDBEntry imdbData = getIMDBData(videoId, client);
-		if (imdbData != null && imdbData.getCountries() != null) {
-			try {
-				country = imdbData.getCountries().stream().findFirst().orElseThrow().getCountry();
-			} catch (NoSuchElementException nsee) {
-				//
-			}
-		}
-		return country;
 	}
 
 }

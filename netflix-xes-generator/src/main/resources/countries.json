@@ -1,0 +1,398 @@
+[
+	{
+		"name": "Algeria",
+		"is_eu": false
+	},
+	{
+		"name": "Angola",
+		"is_eu": false
+	},
+	{
+		"name": "Argentina","is_eu": false
+	},
+	{
+		"name": "Armenia","is_eu": false
+	},
+	{
+		"name": "Australia","is_eu": false
+	},
+	{
+		"name": "Austria","is_eu": true
+	},
+	{
+		"name": "Azerbaijan","is_eu": false
+	},
+	{
+		"name": "Bangladesh","is_eu": false
+	},
+	{
+		"name": "Belarus","is_eu": false
+	},
+	{
+		"name": "Belgium","is_eu": true
+	},
+	{
+		"name": "Bermuda","is_eu": false
+	},
+	{
+		"name": "Bolivia","is_eu": false
+	},
+	{
+		"name": "Botswana","is_eu": false
+	},
+	{
+		"name": "Brazil","is_eu": false
+	},
+	{
+		"name": "Bulgaria","is_eu": false
+	},
+	{
+		"name": "Cambodia","is_eu": false
+	},
+	{
+		"name": "Cameroon","is_eu": false
+	},
+	{
+		"name": "Canada","is_eu": false
+	},
+	{
+		"name": "Cayman Islands","is_eu": false
+	},
+	{
+		"name": "Central African Republic","is_eu": false
+	},
+	{
+		"name": "Chile","is_eu": false
+	},
+	{
+		"name": "China","is_eu": false
+	},
+	{
+		"name": "Colombia","is_eu": false
+	},
+	{
+		"name": "Congo","is_eu": false
+	},
+	{
+		"name": "Costa Rica","is_eu": false
+	},
+	{
+		"name": "Côte d'Ivoire","is_eu": false
+	},
+	{
+		"name": "Croatia","is_eu": false
+	},
+	{
+		"name": "Cuba","is_eu": false
+	},
+	{
+		"name": "Cyprus","is_eu": true
+	},
+	{
+		"name": "Czechoslovakia","is_eu": true
+	},
+	{
+		"name": "Czech Republic","is_eu": true
+	},
+	{
+		"name": "Denmark","is_eu": true
+	},
+	{
+		"name": "Djibouti","is_eu": false
+	},
+	{
+		"name": "Dominican Republic","is_eu": false
+	},
+	{
+		"name": "Ecuador","is_eu": false
+	},
+	{
+		"name": "Egypt","is_eu": false
+	},
+	{
+		"name": "Estonia","is_eu": true
+	},
+	{
+		"name": "Federal Republic of Yugoslavia","is_eu": false
+	},
+	{
+		"name": "Finland","is_eu": true
+	},
+	{
+		"name": "France","is_eu": true
+	},
+	{
+		"name": "Gambia","is_eu": false
+	},
+	{
+		"name": "Georgia","is_eu": false
+	},
+	{
+		"name": "Germany","is_eu": true
+	},
+	{
+		"name": "Ghana","is_eu": false
+	},
+	{
+		"name": "Greece","is_eu": true
+	},
+	{
+		"name": "Guatemala","is_eu": false
+	},
+	{
+		"name": "Haiti","is_eu": false
+	},
+	{
+		"name": "Hong Kong","is_eu": false
+	},
+	{
+		"name": "Hungary","is_eu": true
+	},
+	{
+		"name": "Iceland","is_eu": false
+	},
+	{
+		"name": "India","is_eu": false
+	},
+	{
+		"name": "Indonesia","is_eu": false
+	},
+	{
+		"name": "Iran","is_eu": false
+	},
+	{
+		"name": "Iraq","is_eu": false
+	},
+	{
+		"name": "Ireland","is_eu": true
+	},
+	{
+		"name": "Israel","is_eu": false
+	},
+	{
+		"name": "Italy","is_eu": true
+	},
+	{
+		"name": "Japan","is_eu": false
+	},
+	{
+		"name": "Jordan","is_eu": false
+	},
+	{
+		"name": "Kazakhstan","is_eu": false
+	},
+	{
+		"name": "Kenya","is_eu": false
+	},
+	{
+		"name": "Korea","is_eu": false
+	},
+	{
+		"name": "Kosovo","is_eu": false
+	},
+	{
+		"name": "Kuwait","is_eu": false
+	},
+	{
+		"name": "Latvia","is_eu": true
+	},
+	{
+		"name": "Lebanon","is_eu": false
+	},
+	{
+		"name": "Lithuania","is_eu": false
+	},
+	{
+		"name": "Luxembourg","is_eu": true
+	},
+	{
+		"name": "Malawi","is_eu": false
+	},
+	{
+		"name": "Malaysia","is_eu": false
+	},
+	{
+		"name": "Malta","is_eu": false
+	},
+	{
+		"name": "Mauritania","is_eu": false
+	},
+	{
+		"name": "Mexico","is_eu": false
+	},
+	{
+		"name": "Moldova","is_eu": false
+	},
+	{
+		"name": "Monaco","is_eu": true
+	},
+	{
+		"name": "Mongolia","is_eu": false
+	},
+	{
+		"name": "Montenegro","is_eu": false
+	},
+	{
+		"name": "Morocco","is_eu": false
+	},
+	{
+		"name": "Mozambique","is_eu": false
+	},
+	{
+		"name": "Myanmar","is_eu": false
+	},
+	{
+		"name": "N/A","is_eu": false
+	},
+	{
+		"name": "Namibia","is_eu": false
+	},
+	{
+		"name": "Netherlands","is_eu": true
+	},
+	{
+		"name": "New Zealand","is_eu": false
+	},
+	{
+		"name": "Nicaragua","is_eu": false
+	},
+	{
+		"name": "Nigeria","is_eu": false
+	},
+	{
+		"name": "Norway","is_eu": false
+	},
+	{
+		"name": "Pakistan","is_eu": false
+	},
+	{
+		"name": "Palestine","is_eu": false
+	},
+	{
+		"name": "Panama","is_eu": false
+	},
+	{
+		"name": "Paraguay","is_eu": false
+	},
+	{
+		"name": "Peru","is_eu": false
+	},
+	{
+		"name": "Philippines","is_eu": false
+	},
+	{
+		"name": "Poland","is_eu": true
+	},
+	{
+		"name": "Portugal","is_eu": true
+	},
+	{
+		"name": "Puerto Rico","is_eu": false
+	},
+	{
+		"name": "Qatar","is_eu": false
+	},
+	{
+		"name": "Republic of Macedonia","is_eu": false
+	},
+	{
+		"name": "Romania","is_eu": true
+	},
+	{
+		"name": "Russia","is_eu": false
+	},
+	{
+		"name": "Rwanda","is_eu": false
+	},
+	{
+		"name": "Saudi Arabia","is_eu": false
+	},
+	{
+		"name": "Senegal","is_eu": false
+	},
+	{
+		"name": "Serbia","is_eu": false
+	},
+	{
+		"name": "Singapore","is_eu": false
+	},
+	{
+		"name": "Slovakia","is_eu": true
+	},
+	{
+		"name": "Slovenia","is_eu": true
+	},
+	{
+		"name": "South Africa","is_eu": false
+	},
+	{
+		"name": "South Korea","is_eu": false
+	},
+	{
+		"name": "Soviet Union","is_eu": false
+	},
+	{
+		"name": "Spain","is_eu": true
+	},
+	{
+		"name": "Sri Lanka","is_eu": false
+	},
+	{
+		"name": "Sweden","is_eu": true
+	},
+	{
+		"name": "Switzerland","is_eu": false
+	},
+	{
+		"name": "Syria","is_eu": false
+	},
+	{
+		"name": "Taiwan","is_eu": false
+	},
+	{
+		"name": "Tanzania","is_eu": false
+	},
+	{
+		"name": "Thailand","is_eu": false
+	},
+	{
+		"name": "Tunisia","is_eu": false
+	},
+	{
+		"name": "Turkey","is_eu": false
+	},
+	{
+		"name": "Uganda","is_eu": false
+	},
+	{
+		"name": "UK","is_eu": true
+	},
+	{
+		"name": "Ukraine","is_eu": false
+	},
+	{
+		"name": "United Arab Emirates","is_eu": false
+	},
+	{
+		"name": "Uruguay","is_eu": false
+	},
+	{
+		"name": "USA","is_eu": false
+	},
+	{
+		"name": "Venezuela","is_eu": false
+	},
+	{
+		"name": "Vietnam",
+		"is_eu": false
+	},
+	{
+		"name": "West Germany","is_eu": true
+	},
+	{
+		"name": "Yugoslavia","is_eu": false
+	},
+	{
+		"name": "Zimbabwe","is_eu": false
+	}
+]

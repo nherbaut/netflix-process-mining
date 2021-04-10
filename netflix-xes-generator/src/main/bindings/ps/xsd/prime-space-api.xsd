@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="root"></xs:element>
+
+	<xs:complexType name="root">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="links" />
+
+
+			<xs:element name="pseudo_ip" type="xs:string" />
+			<xs:element name="timestamp" type="xs:long" />
+			<xs:element name="timestamp_human" type="xs:string" />
+			<xs:element name="track_id" type="xs:string" />
+			<xs:element name="user" type="xs:string" />
+			<xs:element name="video_id" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="links">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="element">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="href" type="xs:string" />
+						<xs:element name="rel" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

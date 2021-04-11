@@ -32,21 +32,22 @@ public final class Inspector implements Runnable {
 	public void run() {
 		while (!stopped) {
 			Integer count = 0;
-			LOGGER.info("ntraces = " + log.getTraces().stream().count() + " nevent = " + log.getTraces().stream()
-					.map(t -> t.getEvents()).reduce(count, new BiFunction<Integer, List<EventType>, Integer>() {
+			LOGGER.info("ntraces = " + log.getTraces().stream().count() + " nevent = "
+					+ log.getTraces().stream().filter(t -> t != null && t.getEvents() != null).map(t -> t.getEvents())
+							.reduce(count, new BiFunction<Integer, List<EventType>, Integer>() {
 
-						@Override
-						public Integer apply(Integer t, List<EventType> u) {
-							return t + u.size();
-						}
+								@Override
+								public Integer apply(Integer t, List<EventType> u) {
+									return t + u.size();
+								}
 
-					}, new BinaryOperator<Integer>() {
+							}, new BinaryOperator<Integer>() {
 
-						@Override
-						public Integer apply(Integer t, Integer u) {
-							return t + u;
-						}
-					}));
+								@Override
+								public Integer apply(Integer t, Integer u) {
+									return t + u;
+								}
+							}));
 			try {
 				Thread.sleep(1000L);
 			} catch (InterruptedException e) {

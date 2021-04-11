@@ -14,7 +14,7 @@ import jakarta.ws.rs.client.Client;
 public class ParallelTraceFactory extends TraceFactory implements CachedResourceExtractor {
 
 	private Client client;
-	private TraceType trace;
+	private Log log;
 
 	public ParallelTraceFactory(ObjectFactory factoryXes, Client client, UserData userData, Log log,
 			ExecutorService executor, CachedResource cache) {
@@ -23,9 +23,7 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 		this.client = client;
 		this.executor = executor;
 		this.cache = cache;
-		this.trace = new UserExtractor(factoryXes, userData, log).getUserTrace();
-
-		log.getTraces().add(this.trace);
+		this.log = log;
 
 	}
 
@@ -34,18 +32,24 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 
 	public void extractEvents() {
 
-		for (Session session : userData.getSessions()) {
-			executor.submit(() -> {
-				new ThumbnailExtractor(session, client, trace, cache).extractResource();
-			});
+		if (userData.getSessions().size() > 0) {
 
-			executor.submit(() -> {
-				new WatchesExtractor(session, client, trace, cache).extractResource();
-			});
+			TraceType trace = new UserExtractor(factoryXes, userData, log).getUserTrace();
+			log.getTraces().add(trace);
 
-			executor.submit(() -> {
-				new LolomoExtractor(session, client, trace, cache).extractResource();
-			});
+			for (Session session : userData.getSessions()) {
+				executor.submit(() -> {
+					new ThumbnailExtractor(session, client, trace, cache).extractResource();
+				});
+
+				executor.submit(() -> {
+					new WatchesExtractor(session, client, trace, cache).extractResource();
+				});
+
+				executor.submit(() -> {
+					new LolomoExtractor(session, client, trace, cache).extractResource();
+				});
+			}
 		}
 
 	}

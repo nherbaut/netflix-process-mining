@@ -1,398 +1,527 @@
-[
+{"countries":[
+
 	{
 		"name": "Algeria",
-		"is_eu": false
+		"cluster": "Other"
 	},
 	{
 		"name": "Angola",
-		"is_eu": false
+		"cluster": "Other"
 	},
 	{
-		"name": "Argentina","is_eu": false
+		"name": "Argentina",
+		"cluster": "Other"
 	},
 	{
-		"name": "Armenia","is_eu": false
+		"name": "Armenia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Australia","is_eu": false
+		"name": "Australia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Austria","is_eu": true
+		"name": "Austria",
+		"cluster": "EU"
 	},
 	{
-		"name": "Azerbaijan","is_eu": false
+		"name": "Azerbaijan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Bangladesh","is_eu": false
+		"name": "Bangladesh",
+		"cluster": "Other"
 	},
 	{
-		"name": "Belarus","is_eu": false
+		"name": "Belarus",
+		"cluster": "Other"
 	},
 	{
-		"name": "Belgium","is_eu": true
+		"name": "Belgium",
+		"cluster": "EU"
 	},
 	{
-		"name": "Bermuda","is_eu": false
+		"name": "Bermuda",
+		"cluster": "Other"
 	},
 	{
-		"name": "Bolivia","is_eu": false
+		"name": "Bolivia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Botswana","is_eu": false
+		"name": "Botswana",
+		"cluster": "Other"
 	},
 	{
-		"name": "Brazil","is_eu": false
+		"name": "Brazil",
+		"cluster": "Other"
 	},
 	{
-		"name": "Bulgaria","is_eu": false
+		"name": "Bulgaria",
+		"cluster": "Other"
 	},
 	{
-		"name": "Cambodia","is_eu": false
+		"name": "Cambodia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Cameroon","is_eu": false
+		"name": "Cameroon",
+		"cluster": "Other"
 	},
 	{
-		"name": "Canada","is_eu": false
+		"name": "Canada",
+		"cluster": "North America"
 	},
 	{
-		"name": "Cayman Islands","is_eu": false
+		"name": "Cayman Islands",
+		"cluster": "Other"
 	},
 	{
-		"name": "Central African Republic","is_eu": false
+		"name": "Central African Republic",
+		"cluster": "Other"
 	},
 	{
-		"name": "Chile","is_eu": false
+		"name": "Chile",
+		"cluster": "Other"
 	},
 	{
-		"name": "China","is_eu": false
+		"name": "China",
+		"cluster": "Other"
 	},
 	{
-		"name": "Colombia","is_eu": false
+		"name": "Colombia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Congo","is_eu": false
+		"name": "Congo",
+		"cluster": "Other"
 	},
 	{
-		"name": "Costa Rica","is_eu": false
+		"name": "Costa Rica",
+		"cluster": "Other"
 	},
 	{
-		"name": "Côte d'Ivoire","is_eu": false
+		"name": "Côte d'Ivoire",
+		"cluster": "Other"
 	},
 	{
-		"name": "Croatia","is_eu": false
+		"name": "Croatia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Cuba","is_eu": false
+		"name": "Cuba",
+		"cluster": "Other"
 	},
 	{
-		"name": "Cyprus","is_eu": true
+		"name": "Cyprus",
+		"cluster": "EU"
 	},
 	{
-		"name": "Czechoslovakia","is_eu": true
+		"name": "Czechoslovakia",
+		"cluster": "EU"
 	},
 	{
-		"name": "Czech Republic","is_eu": true
+		"name": "Czech Republic",
+		"cluster": "EU"
 	},
 	{
-		"name": "Denmark","is_eu": true
+		"name": "Denmark",
+		"cluster": "EU"
 	},
 	{
-		"name": "Djibouti","is_eu": false
+		"name": "Djibouti",
+		"cluster": "Other"
 	},
 	{
-		"name": "Dominican Republic","is_eu": false
+		"name": "Dominican Republic",
+		"cluster": "Other"
 	},
 	{
-		"name": "Ecuador","is_eu": false
+		"name": "Ecuador",
+		"cluster": "Other"
 	},
 	{
-		"name": "Egypt","is_eu": false
+		"name": "Egypt",
+		"cluster": "Other"
 	},
 	{
-		"name": "Estonia","is_eu": true
+		"name": "Estonia",
+		"cluster": "EU"
 	},
 	{
-		"name": "Federal Republic of Yugoslavia","is_eu": false
+		"name": "Federal Republic of Yugoslavia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Finland","is_eu": true
+		"name": "Finland",
+		"cluster": "EU"
 	},
 	{
-		"name": "France","is_eu": true
+		"name": "France",
+		"cluster": "EU"
 	},
 	{
-		"name": "Gambia","is_eu": false
+		"name": "Gambia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Georgia","is_eu": false
+		"name": "Georgia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Germany","is_eu": true
+		"name": "Germany",
+		"cluster": "EU"
 	},
 	{
-		"name": "Ghana","is_eu": false
+		"name": "Ghana",
+		"cluster": "Other"
 	},
 	{
-		"name": "Greece","is_eu": true
+		"name": "Greece",
+		"cluster": "EU"
 	},
 	{
-		"name": "Guatemala","is_eu": false
+		"name": "Guatemala",
+		"cluster": "Other"
 	},
 	{
-		"name": "Haiti","is_eu": false
+		"name": "Haiti",
+		"cluster": "Other"
 	},
 	{
-		"name": "Hong Kong","is_eu": false
+		"name": "Hong Kong",
+		"cluster": "Other"
 	},
 	{
-		"name": "Hungary","is_eu": true
+		"name": "Hungary",
+		"cluster": "EU"
 	},
 	{
-		"name": "Iceland","is_eu": false
+		"name": "Iceland",
+		"cluster": "Other"
 	},
 	{
-		"name": "India","is_eu": false
+		"name": "India",
+		"cluster": "Other"
 	},
 	{
-		"name": "Indonesia","is_eu": false
+		"name": "Indonesia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Iran","is_eu": false
+		"name": "Iran",
+		"cluster": "Other"
 	},
 	{
-		"name": "Iraq","is_eu": false
+		"name": "Iraq",
+		"cluster": "Other"
 	},
 	{
-		"name": "Ireland","is_eu": true
+		"name": "Ireland",
+		"cluster": "EU"
 	},
 	{
-		"name": "Israel","is_eu": false
+		"name": "Israel",
+		"cluster": "Other"
 	},
 	{
-		"name": "Italy","is_eu": true
+		"name": "Italy",
+		"cluster": "EU"
 	},
 	{
-		"name": "Japan","is_eu": false
+		"name": "Japan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Jordan","is_eu": false
+		"name": "Jordan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Kazakhstan","is_eu": false
+		"name": "Kazakhstan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Kenya","is_eu": false
+		"name": "Kenya",
+		"cluster": "Other"
 	},
 	{
-		"name": "Korea","is_eu": false
+		"name": "Korea",
+		"cluster": "Other"
 	},
 	{
-		"name": "Kosovo","is_eu": false
+		"name": "Kosovo",
+		"cluster": "Other"
 	},
 	{
-		"name": "Kuwait","is_eu": false
+		"name": "Kuwait",
+		"cluster": "Other"
 	},
 	{
-		"name": "Latvia","is_eu": true
+		"name": "Latvia",
+		"cluster": "EU"
 	},
 	{
-		"name": "Lebanon","is_eu": false
+		"name": "Lebanon",
+		"cluster": "Other"
 	},
 	{
-		"name": "Lithuania","is_eu": false
+		"name": "Lithuania",
+		"cluster": "Other"
 	},
 	{
-		"name": "Luxembourg","is_eu": true
+		"name": "Luxembourg",
+		"cluster": "EU"
 	},
 	{
-		"name": "Malawi","is_eu": false
+		"name": "Malawi",
+		"cluster": "Other"
 	},
 	{
-		"name": "Malaysia","is_eu": false
+		"name": "Malaysia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Malta","is_eu": false
+		"name": "Malta",
+		"cluster": "Other"
 	},
 	{
-		"name": "Mauritania","is_eu": false
+		"name": "Mauritania",
+		"cluster": "Other"
 	},
 	{
-		"name": "Mexico","is_eu": false
+		"name": "Mexico",
+		"cluster": "Other"
 	},
 	{
-		"name": "Moldova","is_eu": false
+		"name": "Moldova",
+		"cluster": "Other"
 	},
 	{
-		"name": "Monaco","is_eu": true
+		"name": "Monaco",
+		"cluster": "EU"
 	},
 	{
-		"name": "Mongolia","is_eu": false
+		"name": "Mongolia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Montenegro","is_eu": false
+		"name": "Montenegro",
+		"cluster": "Other"
 	},
 	{
-		"name": "Morocco","is_eu": false
+		"name": "Morocco",
+		"cluster": "Other"
 	},
 	{
-		"name": "Mozambique","is_eu": false
+		"name": "Mozambique",
+		"cluster": "Other"
 	},
 	{
-		"name": "Myanmar","is_eu": false
+		"name": "Myanmar",
+		"cluster": "Other"
 	},
 	{
-		"name": "N/A","is_eu": false
+		"name": "N/A",
+		"cluster": "Other"
 	},
 	{
-		"name": "Namibia","is_eu": false
+		"name": "Namibia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Netherlands","is_eu": true
+		"name": "Netherlands",
+		"cluster": "EU"
 	},
 	{
-		"name": "New Zealand","is_eu": false
+		"name": "New Zealand",
+		"cluster": "Other"
 	},
 	{
-		"name": "Nicaragua","is_eu": false
+		"name": "Nicaragua",
+		"cluster": "Other"
 	},
 	{
-		"name": "Nigeria","is_eu": false
+		"name": "Nigeria",
+		"cluster": "Other"
 	},
 	{
-		"name": "Norway","is_eu": false
+		"name": "Norway",
+		"cluster": "Other"
 	},
 	{
-		"name": "Pakistan","is_eu": false
+		"name": "Pakistan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Palestine","is_eu": false
+		"name": "Palestine",
+		"cluster": "Other"
 	},
 	{
-		"name": "Panama","is_eu": false
+		"name": "Panama",
+		"cluster": "Other"
 	},
 	{
-		"name": "Paraguay","is_eu": false
+		"name": "Paraguay",
+		"cluster": "Other"
 	},
 	{
-		"name": "Peru","is_eu": false
+		"name": "Peru",
+		"cluster": "Other"
 	},
 	{
-		"name": "Philippines","is_eu": false
+		"name": "Philippines",
+		"cluster": "Other"
 	},
 	{
-		"name": "Poland","is_eu": true
+		"name": "Poland",
+		"cluster": "EU"
 	},
 	{
-		"name": "Portugal","is_eu": true
+		"name": "Portugal",
+		"cluster": "EU"
 	},
 	{
-		"name": "Puerto Rico","is_eu": false
+		"name": "Puerto Rico",
+		"cluster": "Other"
 	},
 	{
-		"name": "Qatar","is_eu": false
+		"name": "Qatar",
+		"cluster": "Other"
 	},
 	{
-		"name": "Republic of Macedonia","is_eu": false
+		"name": "Republic of Macedonia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Romania","is_eu": true
+		"name": "Romania",
+		"cluster": "EU"
 	},
 	{
-		"name": "Russia","is_eu": false
+		"name": "Russia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Rwanda","is_eu": false
+		"name": "Rwanda",
+		"cluster": "Other"
 	},
 	{
-		"name": "Saudi Arabia","is_eu": false
+		"name": "Saudi Arabia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Senegal","is_eu": false
+		"name": "Senegal",
+		"cluster": "Other"
 	},
 	{
-		"name": "Serbia","is_eu": false
+		"name": "Serbia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Singapore","is_eu": false
+		"name": "Singapore",
+		"cluster": "Other"
 	},
 	{
-		"name": "Slovakia","is_eu": true
+		"name": "Slovakia",
+		"cluster": "EU"
 	},
 	{
-		"name": "Slovenia","is_eu": true
+		"name": "Slovenia",
+		"cluster": "EU"
 	},
 	{
-		"name": "South Africa","is_eu": false
+		"name": "South Africa",
+		"cluster": "Other"
 	},
 	{
-		"name": "South Korea","is_eu": false
+		"name": "South Korea",
+		"cluster": "Other"
 	},
 	{
-		"name": "Soviet Union","is_eu": false
+		"name": "Soviet Union",
+		"cluster": "Other"
 	},
 	{
-		"name": "Spain","is_eu": true
+		"name": "Spain",
+		"cluster": "EU"
 	},
 	{
-		"name": "Sri Lanka","is_eu": false
+		"name": "Sri Lanka",
+		"cluster": "Other"
 	},
 	{
-		"name": "Sweden","is_eu": true
+		"name": "Sweden",
+		"cluster": "EU"
 	},
 	{
-		"name": "Switzerland","is_eu": false
+		"name": "Switzerland",
+		"cluster": "Other"
 	},
 	{
-		"name": "Syria","is_eu": false
+		"name": "Syria",
+		"cluster": "Other"
 	},
 	{
-		"name": "Taiwan","is_eu": false
+		"name": "Taiwan",
+		"cluster": "Other"
 	},
 	{
-		"name": "Tanzania","is_eu": false
+		"name": "Tanzania",
+		"cluster": "Other"
 	},
 	{
-		"name": "Thailand","is_eu": false
+		"name": "Thailand",
+		"cluster": "Other"
 	},
 	{
-		"name": "Tunisia","is_eu": false
+		"name": "Tunisia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Turkey","is_eu": false
+		"name": "Turkey",
+		"cluster": "Other"
 	},
 	{
-		"name": "Uganda","is_eu": false
+		"name": "Uganda",
+		"cluster": "Other"
 	},
 	{
-		"name": "UK","is_eu": true
+		"name": "UK",
+		"cluster": "EU"
 	},
 	{
-		"name": "Ukraine","is_eu": false
+		"name": "Ukraine",
+		"cluster": "Other"
 	},
 	{
-		"name": "United Arab Emirates","is_eu": false
+		"name": "United Arab Emirates",
+		"cluster": "Other"
 	},
 	{
-		"name": "Uruguay","is_eu": false
+		"name": "Uruguay",
+		"cluster": "Other"
 	},
 	{
-		"name": "USA","is_eu": false
+		"name": "USA",
+		"cluster": "North America"
 	},
 	{
-		"name": "Venezuela","is_eu": false
+		"name": "Venezuela",
+		"cluster": "Other"
 	},
 	{
 		"name": "Vietnam",
-		"is_eu": false
+		"cluster": "Other"
 	},
 	{
-		"name": "West Germany","is_eu": true
+		"name": "West Germany",
+		"cluster": "EU"
 	},
 	{
-		"name": "Yugoslavia","is_eu": false
+		"name": "Yugoslavia",
+		"cluster": "Other"
 	},
 	{
-		"name": "Zimbabwe","is_eu": false
+		"name": "Zimbabwe",
+		"cluster": "Other"
 	}
-]
+]}

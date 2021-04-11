@@ -1,5 +1,6 @@
 package fr.pantheonsorbonne.cri.cache;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -31,6 +32,12 @@ class ConcurrentMapCachedResource implements CachedResource {
 	@Override
 	public <T> void cache(String key, T obj) {
 		cache.put(key, obj);
+
+	}
+
+	@Override
+	public void close() throws IOException {
+		// noop
 
 	}
 }

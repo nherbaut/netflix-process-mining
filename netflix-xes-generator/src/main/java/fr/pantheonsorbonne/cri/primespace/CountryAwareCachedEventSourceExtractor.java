@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
+import fr.pantheonsorbonne.cri.CountryMapSingleton;
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.model.stream4good.Content;
 import fr.pantheonsorbonne.cri.model.stream4good.IMDBData;
@@ -27,7 +28,8 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CountryAwareCachedEventSourceExtractor.class);
 
-	public CountryAwareCachedEventSourceExtractor(Session session, Client client, TraceType trace, CachedResource cache) {
+	public CountryAwareCachedEventSourceExtractor(Session session, Client client, TraceType trace,
+			CachedResource cache) {
 		super(session, client, trace, cache);
 
 	}
@@ -42,7 +44,7 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 				//
 			}
 		}
-		return country;
+		return CountryMapSingleton.getCluster(country);
 	}
 
 	public IMDBEntry getIMDBData(String videoId, Client client) throws IOException {

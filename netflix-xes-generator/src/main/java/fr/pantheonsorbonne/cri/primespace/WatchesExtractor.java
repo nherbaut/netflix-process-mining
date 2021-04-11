@@ -33,7 +33,7 @@ class WatchesExtractor extends CountryAwareCachedEventSourceExtractor<WatchData>
 				try {
 					country = getCountryForVideoId(client, w.getVideo_id());
 					trace.getEvents().add(eventFactory.getWatchEvent(w.getVideo_id(), w.getDuration_seconds(),
-							w.getTimestamp(), country));
+							w.getTimestamp(), country, session.getUserData().getUser().getUser_id()));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

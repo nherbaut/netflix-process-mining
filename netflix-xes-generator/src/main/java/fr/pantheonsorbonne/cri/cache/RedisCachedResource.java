@@ -20,8 +20,8 @@ public class RedisCachedResource implements Closeable, CachedResource {
 	private final RedisCommands<String, String> syncCommands;
 	private final static Logger LOGGER = LoggerFactory.getLogger(RedisCachedResource.class);
 
-	public RedisCachedResource() {
-		redisClient = RedisClient.create("redis://localhost:6379/0");
+	public RedisCachedResource(String redisConnectionString) {
+		redisClient = RedisClient.create(redisConnectionString);
 		connection = redisClient.connect();
 		syncCommands = connection.sync();
 

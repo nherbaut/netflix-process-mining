@@ -1,6 +1,10 @@
 package fr.pantheonsorbonne.cri.primespace;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.model.stream4good.Session;
@@ -29,26 +33,36 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 
 	private final ExecutorService executor;
 	private final CachedResource cache;
+	private final Queue<Future<?>> tasks = new LinkedList<>();
 
 	public void extractEvents() {
 
-		if (userData.getSessions().size() > 0) {
-
-			TraceType trace = new UserExtractor(factoryXes, userData, log).getUserTrace();
-			log.getTraces().add(trace);
+		if (true || userData.getUser().getUser_id().equals("a01efb7d-c6fa-4f1d-b79d-41e74234af79")
+				&& userData.getSessions().size() > 10) {
 
 			for (Session session : userData.getSessions()) {
-				executor.submit(() -> {
-					new ThumbnailExtractor(session, client, trace, cache).extractResource();
-				});
+				session.setUserData(userData);
 
-				executor.submit(() -> {
-					new WatchesExtractor(session, client, trace, cache).extractResource();
-				});
+				TraceType trace = new UserExtractor(factoryXes, session, log).getUserTrace();
+				log.getTraces().add(trace);
 
-				executor.submit(() -> {
+				session.setUserData(userData);
+
+				tasks.add(executor.submit(() -> {
+					new SessionExtractor(session, client, trace, cache).extractResource();
+				}));
+				tasks.add(executor.submit(() -> {
 					new LolomoExtractor(session, client, trace, cache).extractResource();
-				});
+				}));
+
+				tasks.add(executor.submit(() -> {
+					new ThumbnailExtractor(session, client, trace, cache).extractResource();
+				}));
+
+				tasks.add(executor.submit(() -> {
+					new WatchesExtractor(session, client, trace, cache).extractResource();
+				}));
+
 			}
 		}
 
@@ -57,6 +71,17 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 	@Override
 	public CachedResource getCache() {
 		return this.cache;
+	}
+
+	public void repportTasks() {
+		for (Future<?> task : tasks) {
+			try {
+
+				task.get();
+			} catch (ExecutionException | InterruptedException ee) {
+				ee.printStackTrace();
+			}
+		}
 	}
 
 }

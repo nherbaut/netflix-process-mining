@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
+import fr.pantheonsorbonne.cri.App;
 import fr.pantheonsorbonne.cri.CountryMapSingleton;
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.model.stream4good.Content;
@@ -35,6 +36,7 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 	}
 
 	protected String getCountryForVideoId(Client client, String videoId) throws IOException {
+//		return "unknown";
 		String country = "unknown";
 		IMDBEntry imdbData = getIMDBData(videoId, client);
 		if (imdbData != null && imdbData.getCountries() != null) {
@@ -52,9 +54,9 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 		if (optionalIMDBEntry == null) {
 			return null;
 		} else if (optionalIMDBEntry.isEmpty()) {
-			try (JsonReader reader = new JsonReader(new InputStreamReader((InputStream) client
-					.target(new URI("https://platform-api.vod-prime.space/api/emns/provider/4/identifier/" + videoId))
-					.request().accept(MediaType.APPLICATION_JSON).get().getEntity()))) {
+			try (JsonReader reader = new JsonReader(
+					new InputStreamReader((InputStream) client.target(new URI(App.platformApiURI + videoId)).request()
+							.accept(MediaType.APPLICATION_JSON).get().getEntity()))) {
 				WebTarget target = ((Content) new Gson().fromJson(reader, Content.class)).getLinkTarget("imdb_id",
 						client);
 				try (JsonReader reader2 = new JsonReader(new InputStreamReader(

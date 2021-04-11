@@ -1,7 +1,9 @@
 package fr.pantheonsorbonne.cri;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -14,16 +16,18 @@ public class CountryMapSingleton {
 
 	private static final Map<String, String> countryMap;
 	static {
-		FileReader readerCountryData;
-		try {
-			readerCountryData = new FileReader(
-					"/home/nherbaut/workspace/netflix-process-mining/netflix-xes-generator/src/main/resources/countries.json");
-		} catch (FileNotFoundException e) {
+
+
+		try (Reader readerCountryData = new InputStreamReader(
+				CountryMapSingleton.class.getResourceAsStream("/countries.json"))) {
+			CountryData countryData = new Gson().fromJson(readerCountryData, CountryData.class);
+			countryMap = countryData.getCountries().stream()
+					.collect(Collectors.toMap(Country::getName, c -> c.getCluster()));
+
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		CountryData countryData = new Gson().fromJson(readerCountryData, CountryData.class);
-		countryMap = countryData.getCountries().stream()
-				.collect(Collectors.toMap(Country::getName, c -> c.getCluster()));
+
 	}
 
 	public static String getCluster(String countryName) {

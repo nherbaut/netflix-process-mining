@@ -17,6 +17,7 @@
 		<maven.compiler.target>15</maven.compiler.target>
 		<jaxb2.version>2.5.0</jaxb2.version>
 		<jersey.version>3.0.1</jersey.version>
+		<app.main.class>fr.pantheonsorbonne.cri.App</app.main.class>
 	</properties>
 
 	<dependencyManagement>
@@ -39,6 +40,13 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.6.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -113,6 +121,8 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+
+
 
 				<plugin>
 					<artifactId>maven-clean-plugin</artifactId>
@@ -237,11 +247,35 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>${app.main.class}</Main-Class>
+										<X-Compile-Source-JDK>${maven.compiler.target}</X-Compile-Source-JDK>
+										<X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 
 				<configuration>
 					<release>${maven.compiler.target}</release>
-
 				</configuration>
 			</plugin>
 

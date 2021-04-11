@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.cri.primespace;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.function.BiConsumer;
 
 import fr.pantheonsorbonne.cri.cache.CachedResource;
@@ -42,9 +43,11 @@ class ThumbnailExtractor extends CountryAwareCachedEventSourceExtractor<Thumbnai
 			for (Thumbnail w : u.getThumbnails()) {
 				String country;
 				try {
+					// Instant timestamp = session.getCreation_date().plusSeconds(1);
+					Instant timestamp = w.getTimestamp();
 					country = getCountryForVideoId(client, w.getVideoId());
 					trace.getEvents().add(eventFactory.getThumbnailEvent(w.getVideoId(), w.getRow(), w.getCol(),
-							w.getTimestamp(), country));
+							timestamp, country, session.getUserData().getUser().getUser_id()));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

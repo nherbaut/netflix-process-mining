@@ -54,8 +54,8 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 		if (optionalIMDBEntry == null) {
 			return null;
 		} else if (optionalIMDBEntry.isEmpty()) {
-			try (JsonReader reader = new JsonReader(
-					new InputStreamReader((InputStream) client.target(new URI(App.platformApiURI + videoId)).request()
+			try (JsonReader reader = new JsonReader(new InputStreamReader(
+					(InputStream) client.target(new URI(App.getInstance().getPlatformApiURI() + videoId)).request()
 							.accept(MediaType.APPLICATION_JSON).get().getEntity()))) {
 				WebTarget target = ((Content) new Gson().fromJson(reader, Content.class)).getLinkTarget("imdb_id",
 						client);

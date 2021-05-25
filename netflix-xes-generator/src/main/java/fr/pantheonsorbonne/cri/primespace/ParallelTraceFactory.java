@@ -37,8 +37,7 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 
 	public void extractEvents() {
 
-		if (true || userData.getUser().getUser_id().equals("a01efb7d-c6fa-4f1d-b79d-41e74234af79")
-				&& userData.getSessions().size() > 10) {
+		
 
 			for (Session session : userData.getSessions()) {
 				session.setUserData(userData);
@@ -63,7 +62,7 @@ public class ParallelTraceFactory extends TraceFactory implements CachedResource
 					new WatchesExtractor(session, client, trace, cache).extractResource();
 				}));
 
-			}
+			
 		}
 
 	}

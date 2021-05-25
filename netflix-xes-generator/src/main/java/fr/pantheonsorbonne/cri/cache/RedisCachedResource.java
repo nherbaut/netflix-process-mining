@@ -32,13 +32,13 @@ public class RedisCachedResource implements Closeable, CachedResource {
 		String fullKey = klass.getSimpleName() + ":" + key;
 		String obj = syncCommands.get(fullKey);
 		if (obj == null) {
-			LOGGER.trace("miss");
+			LOGGER.trace("{} miss", key);
 			return Optional.empty();
 		} else if (obj.equals("")) {
-			LOGGER.trace("hit (empty)");
+			LOGGER.trace("{}, hit (empty)", key);
 			return null;
 		} else {
-			LOGGER.trace("hit ");
+			LOGGER.trace("{} hit ", key);
 			return Optional.of(new Gson().fromJson(obj, klass));
 		}
 	}

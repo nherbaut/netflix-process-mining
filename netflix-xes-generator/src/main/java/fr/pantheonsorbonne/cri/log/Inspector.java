@@ -1,6 +1,8 @@
 package fr.pantheonsorbonne.cri.log;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 
@@ -13,6 +15,7 @@ import fr.pantheonsorbonne.ufr27.miage.model.xes.Log;
 public final class Inspector implements Runnable {
 	private final Log log;
 	private boolean stopped = false;
+	private ThreadPoolExecutor es;
 
 	public boolean isStopped() {
 		return stopped;
@@ -24,15 +27,22 @@ public final class Inspector implements Runnable {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(Inspector.class);
 
-	public Inspector(Log log) {
+	public Inspector(Log log, ExecutorService es) {
 		this.log = log;
+		if (es instanceof ThreadPoolExecutor) {
+			this.es = (ThreadPoolExecutor) es;
+		}
 	}
 
 	@Override
 	public void run() {
 		while (!stopped) {
 			Integer count = 0;
-			LOGGER.info("ntraces = " + log.getTraces().stream().count() + " nevent = "
+			long pending = -1;
+			if (es != null) {
+				pending = es.getTaskCount() - es.getActiveCount() - es.getCompletedTaskCount();
+			}
+			LOGGER.info("pending tasks = " + pending + " ntraces = " + log.getTraces().stream().count() + " nevent = "
 					+ log.getTraces().stream().filter(t -> t != null && t.getEvents() != null).map(t -> t.getEvents())
 							.reduce(count, new BiFunction<Integer, List<EventType>, Integer>() {
 

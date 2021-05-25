@@ -43,8 +43,8 @@ class ThumbnailExtractor extends CountryAwareCachedEventSourceExtractor<Thumbnai
 			for (Thumbnail w : u.getThumbnails()) {
 				String country;
 				try {
-					// Instant timestamp = session.getCreation_date().plusSeconds(1);
-					Instant timestamp = w.getTimestamp();
+					Instant timestamp = session.getCreation_date().plusSeconds(1);
+					//Instant timestamp = w.getTimestamp();
 					country = getCountryForVideoId(client, w.getVideoId());
 					trace.getEvents().add(eventFactory.getThumbnailEvent(w.getVideoId(), w.getRow(), w.getCol(),
 							timestamp, country, session.getUserData().getUser().getUser_id()));

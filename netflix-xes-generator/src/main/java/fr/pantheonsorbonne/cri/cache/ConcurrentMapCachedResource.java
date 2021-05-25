@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-class ConcurrentMapCachedResource implements CachedResource {
+public class ConcurrentMapCachedResource implements CachedResource {
 	ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
 
 	@SuppressWarnings("unchecked")

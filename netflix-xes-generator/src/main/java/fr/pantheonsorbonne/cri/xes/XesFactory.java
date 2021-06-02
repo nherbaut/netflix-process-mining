@@ -16,7 +16,7 @@ import fr.pantheonsorbonne.ufr27.miage.model.xes.ObjectFactory;
 public class XesFactory {
 
 	public enum NETFLIX_ASSET_TYPE {
-		LOLOMO, THUMBNAIL, WATCH, SESSION_START;
+		LOLOMO, THUMBNAIL, WATCH, SESSION_START, SESSION_END;
 	}
 
 	public enum XES_ATTR {
@@ -30,6 +30,7 @@ public class XesFactory {
 		ROW("row"), //
 		COL("col"), //
 		RANK("rank"), //
+		COUNTRY("country"), //
 		NETFLIX_ASSET_TYPE("netflixType");
 
 		private final String xesName;

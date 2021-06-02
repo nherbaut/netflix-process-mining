@@ -3,6 +3,7 @@ package fr.pantheonsorbonne.cri.primespace;
 import java.time.Instant;
 import java.util.function.BiConsumer;
 
+import fr.pantheonsorbonne.cri.ClassificationSingleton;
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.model.stream4good.Lolomo;
 import fr.pantheonsorbonne.cri.model.stream4good.LolomoData;
@@ -30,7 +31,7 @@ class LolomoExtractor extends CachedEventSourceExtractor<LolomoData> {
 				Instant timestamp = session.getCreation_date().plusSeconds(1);
 				//Instant timestamp = lolomo.getTimestamp();
 				trace.getEvents().add(eventFactory.getLolomoEvent(lolomo.getType(), lolomo.getAssociated_content(),
-						lolomo.getRank(), timestamp, session.getUserData().getUser().getUser_id()));
+						lolomo.getRank(), timestamp, session.getUserData().getUser().getUser_id(),ClassificationSingleton.getLolomoCluster(lolomo.getType())));
 			}
 
 		}

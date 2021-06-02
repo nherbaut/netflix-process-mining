@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.cri.model.stream4good;
 
-public class Country {
+public class ClassificationItem {
 	public String getCluster() {
 		return cluster;
 	}

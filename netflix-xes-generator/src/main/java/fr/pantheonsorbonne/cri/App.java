@@ -188,23 +188,26 @@ public class App implements Runnable {
 
 	private static Instant getDateAttr(EventType o) {
 		return Helper.getInstant(((AttributeDateType) (o.getStringsAndDatesAndInts().stream()
-				.filter(a -> a.getKey().equals(XES_ATTR.TIMESTAMP.getXesName())).findAny().orElseThrow(new Supplier<RuntimeException>() {
+				.filter(a -> a.getKey().equals(XES_ATTR.TIMESTAMP.getXesName())).findAny()
+				.orElseThrow(new Supplier<RuntimeException>() {
 
 					@Override
 					public RuntimeException get() {
-						return new RuntimeException(o.toString()+" does not have a timestamp");
+						return new RuntimeException(o.toString() + " does not have a timestamp");
 					}
 				}))).getValue());
 	}
 
-	private static void setTimeStamp(EventType o,Instant i) {
+	private static void setTimeStamp(EventType o, Instant i) {
 		AttributeDateType timestamp = (AttributeDateType) (o.getStringsAndDatesAndInts().stream()
 				.filter(a -> a.getKey().equals(XES_ATTR.TIMESTAMP.getXesName())).findAny().orElseThrow());
-		timestamp .setValue(Helper.toDate(i));
+		timestamp.setValue(Helper.toDate(i));
 	}
-	
+
 	private static String getSessionIdFromTrace(TraceType t) {
-		return ((AttributeStringType) (t.getStringsAndDatesAndInts().stream().filter(a -> a.getKey().equals(XES_ATTR.ORG_RESOURCE.getXesName())).findAny().orElseThrow())).getValue();
+		return ((AttributeStringType) (t.getStringsAndDatesAndInts().stream()
+				.filter(a -> a.getKey().equals(XES_ATTR.ORG_RESOURCE.getXesName())).findAny().orElseThrow()))
+						.getValue();
 	}
 
 	private static class EventXesTimeStampComparatorStrategy1 implements Comparator<EventType> {
@@ -227,7 +230,7 @@ public class App implements Runnable {
 				if (rowComparison != 0) {
 					return rowComparison;
 				} else {
-					return Long.compare(getRowForThumbnail(o1), getRowForThumbnail(o2));
+					return Long.compare(getColForThumbnail(o1), getColForThumbnail(o2));
 				}
 
 			}
@@ -341,18 +344,69 @@ public class App implements Runnable {
 			}
 
 			log.getTraces().sort(new TracesXesTimeStampComparator());
+
 			for (TraceType trace : log.getTraces()) {
+				if (trace.getEvents().size() == 0) {
+					continue;
+				}
 				trace.getEvents().sort(new EventXesTimeStampComparatorStrategy1());
+
+				// deduplicate events
+				List<EventType> dedupEvents = new ArrayList<EventType>();
+				dedupEvents.add(trace.getEvents().get(0));
+				for (int i = 1; i < trace.getEvents().size(); i++) {
+					EventType event1 = trace.getEvents().get(i - 1);
+					EventType event2 = trace.getEvents().get(i);
+
+					if (getNetflixTypeForEvent(event1).equals(getNetflixTypeForEvent(event2))) {
+						if (getNetflixTypeForEvent(event1).equals(NETFLIX_ASSET_TYPE.THUMBNAIL)
+								&& getRowForThumbnail(event1) == getRowForThumbnail(event2)
+								&& getColForThumbnail(event1) == getColForThumbnail(event2)) {
+							continue;
+						} else if (getNetflixTypeForEvent(event1).equals(NETFLIX_ASSET_TYPE.LOLOMO)
+								&& getRankForLolomo(event1) == getRankForLolomo(event2)) {
+							continue;
+						}
+					}
+
+					if (getNetflixTypeForEvent(event2).equals(NETFLIX_ASSET_TYPE.THUMBNAIL)) {
+						System.out.println(getRowForThumbnail(event2) + ":" + getColForThumbnail(event2));
+					}
+					dedupEvents.add(event2);
+				}
+
+				trace.getEvents().clear();
+				trace.getEvents().addAll(dedupEvents);
+
+				trace.getEvents().stream().filter(e -> getNetflixTypeForEvent(e).equals(NETFLIX_ASSET_TYPE.THUMBNAIL))
+						.map(e -> getRowForThumbnail(e) + ":" + getColForThumbnail(e)).forEach(System.out::println);
+
 				Instant startSessionTimestamp = getDateAttr(trace.getEvents().get(0));
-				//if no lolomo-0 is reccorded, add it
-				if(trace.getEvents().size()>1 && !getNetflixTypeForEvent(trace.getEvents().get(1)).equals(NETFLIX_ASSET_TYPE.LOLOMO)) {
-					trace.getEvents().add(1, getFakeBillboardLolomo(trace, startSessionTimestamp)); 
+				// if no lolomo-0 is reccorded, add it
+				if (trace.getEvents().size() > 1
+						&& !getNetflixTypeForEvent(trace.getEvents().get(1)).equals(NETFLIX_ASSET_TYPE.LOLOMO)) {
+					trace.getEvents().add(1, getFakeBillboardLolomo(trace, startSessionTimestamp));
 				}
-				
-				for (EventType event : trace.getEvents()) {
+
+				boolean watchFound = false;
+				for (int i = 0; i < trace.getEvents().size(); i++) {
+					EventType event = trace.getEvents().get(i);
+					// add an end session before the first watch
+					if (!watchFound && getNetflixTypeForEvent(event).equals(NETFLIX_ASSET_TYPE.WATCH)) {
+						watchFound = true;
+						startSessionTimestamp = startSessionTimestamp.plusMillis(1000);
+						trace.getEvents().add(i, getFakeEndThumbnails(trace, startSessionTimestamp));
+					}
 					setTimeStamp(event, startSessionTimestamp);
-					startSessionTimestamp=startSessionTimestamp.plusMillis(10);
+					startSessionTimestamp = startSessionTimestamp.plusMillis(1000);
+
 				}
+
+				if (!watchFound) {
+
+					trace.getEvents().add(getFakeEndThumbnails(trace, startSessionTimestamp.plusMillis(1000)));
+				}
+
 			}
 
 			JAXBContext context = JAXBContext.newInstance(Log.class);
@@ -371,8 +425,13 @@ public class App implements Runnable {
 	}
 
 	private EventType getFakeBillboardLolomo(TraceType trace, Instant startSessionTimestamp) {
-		return new EventFactory(new ObjectFactory()).getLolomoEvent("billboard", "",
-				0, startSessionTimestamp , getSessionIdFromTrace(trace));
+		return new EventFactory(new ObjectFactory()).getLolomoEvent("bigRow", "", 0, startSessionTimestamp,
+				getSessionIdFromTrace(trace), ClassificationSingleton.getLolomoCluster("bigRow"));
+	}
+
+	private EventType getFakeEndThumbnails(TraceType trace, Instant startSessionTimestamp) {
+		return new EventFactory(new ObjectFactory()).getFakeEndSessionEvent(startSessionTimestamp,
+				getSessionIdFromTrace(trace));
 	}
 
 }

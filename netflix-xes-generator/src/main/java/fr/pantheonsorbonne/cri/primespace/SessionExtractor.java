@@ -26,7 +26,7 @@ public class SessionExtractor extends CountryAwareCachedEventSourceExtractor<Ses
 			@Override
 			public void accept(TraceType t, Session u) {
 
-				trace.getEvents().add(eventFactory.getSessionEvent(u.getCreation_date(),
+				trace.getEvents().add(eventFactory.getStartSessionEvent(u.getCreation_date(),
 						session.getUserData().getUser().getUser_id()));
 			}
 		};

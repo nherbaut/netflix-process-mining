@@ -524,4 +524,87 @@
 		"name": "Zimbabwe",
 		"cluster": "Other"
 	}
-]}
+],
+
+"lolomos":[
+{
+		"name": "genre",
+        "cluster":"list1"
+},
+
+{
+		"name": "trendingNow",
+        "cluster":"list1"
+},
+{
+		"name": "bigRow",
+        "cluster":"list1"
+},
+{
+		"name": "topTen",
+        "cluster":"list1"
+},
+{
+		"name": "newRelease",
+        "cluster":"list1"
+},
+
+{
+		"name": "similars",
+        "cluster":"list1"
+},
+{
+		"name": "netflixOriginals",
+        "cluster":"list1"
+},
+{
+		"name": "recentlyAdded",
+        "cluster":"list1"
+},
+{
+		"name": "windowedNewReleases",
+        "cluster":"list1"
+},
+{
+		"name": "windowedComingSoon",
+        "cluster":"list1"
+},
+{
+		"name": "becauseYouAdded",
+        "cluster":"list1"
+},
+{
+		"name": "becauseYouLiked",
+        "cluster":"list1"
+},
+{
+		"name": "hiddenGems",
+        "cluster":"list1"
+},
+
+{
+		"name": "mostWatched",
+        "cluster":"list2"
+},
+{
+		"name": "popularTitles",
+        "cluster":"list2"
+},
+{
+		"name": "queue",
+        "cluster":"list2"
+},
+{
+		"name": "watchAgain",
+        "cluster":"list2"
+},
+{
+		"name": "continueWatching",
+        "cluster":"list2"
+}
+]
+    
+
+
+
+}

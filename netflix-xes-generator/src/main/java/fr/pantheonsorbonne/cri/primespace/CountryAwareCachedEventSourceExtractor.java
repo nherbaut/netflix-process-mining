@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import fr.pantheonsorbonne.cri.App;
-import fr.pantheonsorbonne.cri.CountryMapSingleton;
+import fr.pantheonsorbonne.cri.ClassificationSingleton;
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.model.stream4good.Content;
 import fr.pantheonsorbonne.cri.model.stream4good.IMDBData;
@@ -46,7 +46,7 @@ public abstract class CountryAwareCachedEventSourceExtractor<T> extends CachedEv
 				//
 			}
 		}
-		return CountryMapSingleton.getCluster(country);
+		return ClassificationSingleton.getCountryCluster(country);
 	}
 
 	public IMDBEntry getIMDBData(String videoId, Client client) throws IOException {

@@ -16,13 +16,14 @@ public class EventFactory extends XesFactory {
 	public EventType getLolomoEvent(String lolomoType, String lolomoAssociatedContent, int lolomoRank,
 			Instant timestamp, String userId) {
 		EventType event = factoryXes.createEventType();
-		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.CONCEPT, "lolomo-"+lolomoType));
-		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ACTIVITY, "lolomo-"+lolomoType));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.NETFLIX_ASSET_TYPE, NETFLIX_ASSET_TYPE.LOLOMO));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.CONCEPT, "lolomo-" + lolomoRank));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ACTIVITY, "lolomo-" + lolomoRank));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ORG_RESOURCE, userId));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.RESOURCE, userId));
 		// event.getStringsAndDatesAndInts().add(attr("associated_content",
 		// lolomoAssociatedContent));
-		// event.getStringsAndDatesAndInts().add(attr("rank", lolomoRank));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.RANK, lolomoRank));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.TIMESTAMP, timestamp));
 
 		return event;
@@ -31,12 +32,13 @@ public class EventFactory extends XesFactory {
 	public EventType getThumbnailEvent(String thumbnailId, int row, int col, Instant instant, String country,
 			String userId) {
 		EventType event = factoryXes.createEventType();
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.NETFLIX_ASSET_TYPE, NETFLIX_ASSET_TYPE.THUMBNAIL));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.CONCEPT, "thumbnail-" + country));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ACTIVITY, "thumbnail-" + country));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ORG_RESOURCE, userId));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.RESOURCE, userId));
-		// event.getStringsAndDatesAndInts().add(attr("row", row));
-		// event.getStringsAndDatesAndInts().add(attr("col", col));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ROW, row));
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.COL, col));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.TIMESTAMP, instant));
 
 		return event;
@@ -44,6 +46,7 @@ public class EventFactory extends XesFactory {
 
 	public EventType getWatchEvent(String videoId, long duration, Instant instant, String country, String userId) {
 		EventType event = factoryXes.createEventType();
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.NETFLIX_ASSET_TYPE, NETFLIX_ASSET_TYPE.WATCH));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.CONCEPT, "watch-" + country));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ACTIVITY, "watch-" + country));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ORG_RESOURCE, userId));
@@ -56,6 +59,7 @@ public class EventFactory extends XesFactory {
 
 	public EventType getSessionEvent(Instant creation_date, String userId) {
 		EventType event = factoryXes.createEventType();
+		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.NETFLIX_ASSET_TYPE, NETFLIX_ASSET_TYPE.SESSION_START));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.CONCEPT, "start_session"));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.ACTIVITY, "start_session"));
 		event.getStringsAndDatesAndInts().add(attr(XES_ATTR.TIMESTAMP, creation_date));

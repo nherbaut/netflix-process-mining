@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -31,13 +33,18 @@ import ch.qos.logback.classic.Level;
 import fr.pantheonsorbonne.cri.cache.CachedResource;
 import fr.pantheonsorbonne.cri.cache.ConcurrentMapCachedResource;
 import fr.pantheonsorbonne.cri.cache.RedisCachedResource;
+import fr.pantheonsorbonne.cri.helper.Helper;
 import fr.pantheonsorbonne.cri.log.Inspector;
 import fr.pantheonsorbonne.cri.model.oauth2.Oauth2Response;
 import fr.pantheonsorbonne.cri.model.stream4good.UserData;
 import fr.pantheonsorbonne.cri.primespace.ParallelTraceFactory;
+import fr.pantheonsorbonne.cri.xes.EventFactory;
 import fr.pantheonsorbonne.cri.xes.XesFactory;
+import fr.pantheonsorbonne.cri.xes.XesFactory.NETFLIX_ASSET_TYPE;
 import fr.pantheonsorbonne.cri.xes.XesFactory.XES_ATTR;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeDateType;
+import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeIntType;
+import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeStringType;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeType;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.EventType;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.Log;
@@ -143,8 +150,109 @@ public class App implements Runnable {
 		}
 	}
 
+	private static NETFLIX_ASSET_TYPE getNetflixTypeForEvent(EventType o) {
+		return NETFLIX_ASSET_TYPE.valueOf(o.getStringsAndDatesAndInts().stream()
+				.filter(a -> a.getKey().equals(XES_ATTR.NETFLIX_ASSET_TYPE.getXesName()))
+				.map(a -> (AttributeStringType) a).findAny().orElseThrow(new Supplier<RuntimeException>() {
+
+					@Override
+					public RuntimeException get() {
+						return new RuntimeException(o.toString() + " does not have and asset type");
+					}
+				}).getValue());
+	}
+
+	private static long getRankForLolomo(EventType o) {
+		return getIntAttr(o, XES_ATTR.RANK);
+	}
+
+	private static long getRowForThumbnail(EventType o) {
+		return getIntAttr(o, XES_ATTR.ROW);
+	}
+
+	private static long getColForThumbnail(EventType o) {
+		return getIntAttr(o, XES_ATTR.COL);
+	}
+
+	private static long getIntAttr(EventType o, XES_ATTR attrType) {
+		return ((AttributeIntType) (o.getStringsAndDatesAndInts().stream()
+				.filter(a -> a.getKey().equals(attrType.getXesName())).findAny()
+				.orElseThrow(new Supplier<RuntimeException>() {
+
+					@Override
+					public RuntimeException get() {
+						return new RuntimeException(o.toString() + " does not have attr type" + attrType.toString());
+					}
+				}))).getValue();
+	}
+
+	private static Instant getDateAttr(EventType o) {
+		return Helper.getInstant(((AttributeDateType) (o.getStringsAndDatesAndInts().stream()
+				.filter(a -> a.getKey().equals(XES_ATTR.TIMESTAMP.getXesName())).findAny().orElseThrow(new Supplier<RuntimeException>() {
+
+					@Override
+					public RuntimeException get() {
+						return new RuntimeException(o.toString()+" does not have a timestamp");
+					}
+				}))).getValue());
+	}
+
+	private static void setTimeStamp(EventType o,Instant i) {
+		AttributeDateType timestamp = (AttributeDateType) (o.getStringsAndDatesAndInts().stream()
+				.filter(a -> a.getKey().equals(XES_ATTR.TIMESTAMP.getXesName())).findAny().orElseThrow());
+		timestamp .setValue(Helper.toDate(i));
+	}
+	
+	private static String getSessionIdFromTrace(TraceType t) {
+		return ((AttributeStringType) (t.getStringsAndDatesAndInts().stream().filter(a -> a.getKey().equals(XES_ATTR.ORG_RESOURCE.getXesName())).findAny().orElseThrow())).getValue();
+	}
+
+	private static class EventXesTimeStampComparatorStrategy1 implements Comparator<EventType> {
+		@Override
+		public int compare(EventType o1, EventType o2) {
+			NETFLIX_ASSET_TYPE t1 = getNetflixTypeForEvent(o1);
+			NETFLIX_ASSET_TYPE t2 = getNetflixTypeForEvent(o2);
+			if (t1.equals(NETFLIX_ASSET_TYPE.LOLOMO) && t2.equals(NETFLIX_ASSET_TYPE.LOLOMO)) {
+				return Long.compare(getRankForLolomo(o1), getRankForLolomo(o2));
+			}
+			if (t1.equals(NETFLIX_ASSET_TYPE.THUMBNAIL) && t2.equals(NETFLIX_ASSET_TYPE.LOLOMO)) {
+				return Long.compare(getRowForThumbnail(o1), getRankForLolomo(o2));
+			}
+			if (t1.equals(NETFLIX_ASSET_TYPE.LOLOMO) && t2.equals(NETFLIX_ASSET_TYPE.THUMBNAIL)) {
+				return Long.compare(getRankForLolomo(o1), getRowForThumbnail(o2));
+			}
+
+			if (t1.equals(NETFLIX_ASSET_TYPE.THUMBNAIL) && t2.equals(NETFLIX_ASSET_TYPE.THUMBNAIL)) {
+				int rowComparison = Long.compare(getRowForThumbnail(o1), getRowForThumbnail(o2));
+				if (rowComparison != 0) {
+					return rowComparison;
+				} else {
+					return Long.compare(getRowForThumbnail(o1), getRowForThumbnail(o2));
+				}
+
+			}
+
+			if (t1.equals(NETFLIX_ASSET_TYPE.SESSION_START)) {
+				return -1;
+			}
+			if (t2.equals(NETFLIX_ASSET_TYPE.SESSION_START)) {
+				return 1;
+			}
+			if (t1.equals(NETFLIX_ASSET_TYPE.WATCH) && !t2.equals(NETFLIX_ASSET_TYPE.WATCH)) {
+				return 1;
+			}
+			if (!t1.equals(NETFLIX_ASSET_TYPE.WATCH) && t2.equals(NETFLIX_ASSET_TYPE.WATCH)) {
+				return -1;
+			}
+			if (t1.equals(NETFLIX_ASSET_TYPE.WATCH) && t2.equals(NETFLIX_ASSET_TYPE.WATCH)) {
+				return getDateAttr(o1).compareTo(getDateAttr(o2));
+			}
+			throw new RuntimeException("failed to compare two events of types " + t1 + " " + t2);
+		}
+	}
+
 	// well it sucks that EventType and TraceType arn't related in XES xsd...
-	private static class TracaeXesTimeStampComparator implements Comparator<TraceType> {
+	private static class TracesXesTimeStampComparator implements Comparator<TraceType> {
 		@Override
 		public int compare(TraceType o1, TraceType o2) {
 			AttributeType timestampO1 = o1.getStringsAndDatesAndInts().stream()
@@ -232,9 +340,19 @@ public class App implements Runnable {
 				e.printStackTrace();
 			}
 
-			log.getTraces().sort(new TracaeXesTimeStampComparator());
+			log.getTraces().sort(new TracesXesTimeStampComparator());
 			for (TraceType trace : log.getTraces()) {
-				trace.getEvents().sort(new EventXesTimeStampComparator());
+				trace.getEvents().sort(new EventXesTimeStampComparatorStrategy1());
+				Instant startSessionTimestamp = getDateAttr(trace.getEvents().get(0));
+				//if no lolomo-0 is reccorded, add it
+				if(trace.getEvents().size()>1 && !getNetflixTypeForEvent(trace.getEvents().get(1)).equals(NETFLIX_ASSET_TYPE.LOLOMO)) {
+					trace.getEvents().add(1, getFakeBillboardLolomo(trace, startSessionTimestamp)); 
+				}
+				
+				for (EventType event : trace.getEvents()) {
+					setTimeStamp(event, startSessionTimestamp);
+					startSessionTimestamp=startSessionTimestamp.plusMillis(10);
+				}
 			}
 
 			JAXBContext context = JAXBContext.newInstance(Log.class);
@@ -250,6 +368,11 @@ public class App implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+
+	private EventType getFakeBillboardLolomo(TraceType trace, Instant startSessionTimestamp) {
+		return new EventFactory(new ObjectFactory()).getLolomoEvent("billboard", "",
+				0, startSessionTimestamp , getSessionIdFromTrace(trace));
 	}
 
 }

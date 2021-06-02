@@ -2,10 +2,7 @@ package fr.pantheonsorbonne.cri.xes;
 
 import java.time.Instant;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
+import fr.pantheonsorbonne.cri.helper.Helper;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeDateType;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeIntType;
 import fr.pantheonsorbonne.ufr27.miage.model.xes.AttributeStringType;
@@ -18,6 +15,10 @@ import fr.pantheonsorbonne.ufr27.miage.model.xes.ObjectFactory;
 
 public class XesFactory {
 
+	public enum NETFLIX_ASSET_TYPE {
+		LOLOMO, THUMBNAIL, WATCH, SESSION_START;
+	}
+
 	public enum XES_ATTR {
 
 		TIMESTAMP("time:timestamp"), //
@@ -25,7 +26,11 @@ public class XesFactory {
 		ACTIVITY("Activity"), //
 		RESOURCE("Resource"), //
 		ORG_RESOURCE("org:resource"), //
-		VIDEO_ID("VideoId");
+		VIDEO_ID("VideoId"), //
+		ROW("row"), //
+		COL("col"), //
+		RANK("rank"), //
+		NETFLIX_ASSET_TYPE("netflixType");
 
 		private final String xesName;
 
@@ -50,6 +55,13 @@ public class XesFactory {
 		attr.setValue(value);
 		return attr;
 	}
+	
+	protected AttributeType attr(XES_ATTR key, NETFLIX_ASSET_TYPE value) {
+		AttributeStringType attr = new AttributeStringType();
+		attr.setKey(key.xesName);
+		attr.setValue(value.toString());
+		return attr;
+	}
 
 	protected AttributeType attr(XES_ATTR key, int value) {
 		AttributeIntType attr = new AttributeIntType();
@@ -61,7 +73,7 @@ public class XesFactory {
 	protected AttributeType attr(XES_ATTR key, Instant value) {
 		AttributeDateType attr = new AttributeDateType();
 		attr.setKey(key.xesName);
-		attr.setValue(toDate(value));
+		attr.setValue(Helper.toDate(value));
 		return attr;
 	}
 
@@ -116,17 +128,6 @@ public class XesFactory {
 
 		return log;
 
-	}
-
-	static XMLGregorianCalendar toDate(Instant instant) {
-		String dateTimeString = instant.toString();
-		XMLGregorianCalendar date2;
-		try {
-			date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTimeString);
-		} catch (DatatypeConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-		return date2;
 	}
 
 }
